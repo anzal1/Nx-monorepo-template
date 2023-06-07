@@ -1,0 +1,71 @@
+{
+  "name": "be-a-ecommerce",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/be-a-ecommerce",
+  "projectType": "application",
+  "scripts": ["node_modules/flowbite/dist/flowbite.min.js"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/be-a-ecommerce",
+        "outputPath": "dist/apps/be-a-ecommerce",
+        "postcssConfig": "apps/be-a-brand/postcss.config.js"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/be-a-ecommerce"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "be-a-ecommerce:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "be-a-ecommerce:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "be-a-ecommerce:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "be-a-ecommerce:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/be-a-ecommerce/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/be-a-ecommerce/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}
